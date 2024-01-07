@@ -1,5 +1,15 @@
 <?php
 
+session_start();
+
+if (!$_SESSION["user"]) {
+    $host = $_SERVER['HTTP_HOST'];
+    $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    $extra = 'login.php';
+    header("Location: http://$host$uri/$extra");
+    exit();
+}
+
 $servername = "localhost";
 $username = "abcd001";
 $password = "abcd001";

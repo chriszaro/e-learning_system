@@ -1,4 +1,15 @@
 <?php
+session_start();
+
+if (!$_SESSION["user"]) {
+    $host = $_SERVER['HTTP_HOST'];
+    $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    $extra = 'login.php';
+    header("Location: http://$host$uri/$extra");
+    exit();
+}
+
+
 if ($_GET["mode"] == "edit") {
     $servername = "localhost";
     $username = "abcd001";
@@ -10,7 +21,7 @@ if ($_GET["mode"] == "edit") {
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = "SELECT * FROM Announcements WHERE id=" . $_GET["id"];
+        $query = "SELECT * FROM announcements WHERE id=" . $_GET["id"];
         //echo $query;
         $stmt = $conn->prepare($query);
         $stmt->execute();

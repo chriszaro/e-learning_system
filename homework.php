@@ -1,5 +1,16 @@
 <?php
 
+session_start();
+
+if (!$_SESSION["user"]) {
+    $host = $_SERVER['HTTP_HOST'];
+    $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    $extra = 'login.php';
+    header("Location: http://$host$uri/$extra");
+    exit();
+}
+
+
 // define variables and set to empty values
 $servername = "localhost";
 $username = "abcd001";
@@ -44,7 +55,7 @@ function test_input($data)
 </head>
 <body>
 <div class="body" id="top">
-    <h1>Έγγραφα μαθήματος</h1>
+    <h1>Εργασίες</h1>
     <div class="container">
         <div class="menu">
             <ul class="menu-list">
@@ -68,7 +79,6 @@ function test_input($data)
         </div>
         <div class="content">
             <?php
-            session_start();
             if ($_SESSION["role"]=='Tutor'){
                 echo "<a href='add_homework.php'>Προσθήκη νέας εργασίας</a>";
             }
