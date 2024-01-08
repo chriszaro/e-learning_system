@@ -1,15 +1,4 @@
-<?php
-
-session_start();
-
-if (!$_SESSION["user"]){
-    $host = $_SERVER['HTTP_HOST'];
-    $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-    $extra = 'login.php';
-    header("Location: http://$host$uri/$extra");
-    exit();
-}
-?>
+<?php include 'check_login.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,26 +11,7 @@ if (!$_SESSION["user"]){
 <div class="body" id="top">
     <h1>Επικοινωνία</h1>
     <div class="container">
-        <div class="menu">
-            <ul class="menu-list">
-                <a href="index.php">
-                    <li class="menu-item">Αρχική σελίδα</li>
-                </a>
-                <a href="announcement.php">
-                    <li class="menu-item">Ανακοινώσεις</li>
-                </a>
-                <a href="communication.php">
-                    <li class="menu-item">Επικοινωνία</li>
-                </a>
-                <a href="documents.php">
-                    <li class="menu-item">Έγγραφα μαθήματος</li>
-                </a>
-                <a href="homework.php">
-                    <li class="menu-item">Εργασίες</li>
-                </a>
-                <a href="logout.php"><li class="menu-item">Logout</li></a>
-            </ul>
-        </div>
+        <?php include 'menu.php';?>
         <div class="content">
             <div class="announcement">
                 <h2 class="announcement-title">Αποστολή e-mail μέσω web φόρμας</h2>
@@ -78,15 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subject = $_POST["subject"];
     $message = $_POST["message"];
 
-    $servername = "localhost";
-    $username = "abcd001";
-    $password = "abcd001";
-    $dbname = "student3868partb";
-
     try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        // set the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn = require 'db_connect.php';
 
         $query = "SELECT email FROM users WHERE role = 'Tutor'";
         //echo $query;

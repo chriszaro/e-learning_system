@@ -30,26 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loginname = test_input($_POST["loginname"]);
     $pass = test_input($_POST["password"]);
 
-    $servername = "localhost";
-    $username = "abcd001";
-    $password = "abcd001";
-    $dbname = "student3868partb";
-
-//    // Create connection
-//    $conn = new mysqli($servername, $username, $password);
-//
-//    // Check connection
-//    if ($conn->connect_error) {
-//        die("Connection failed: " . $conn->connect_error);
-//    }
-//    echo "Connected successfully";
-
     try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        // set the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//        $status = $conn->getAttribute(PDO::ATTR_CONNECTION_STATUS);
-//        echo $status;
+        $conn = require 'db_connect.php';
 
         $query = "SELECT email, role FROM users WHERE email = '" . $loginname . "' AND password ='" . $pass . "'";
         //echo $query;

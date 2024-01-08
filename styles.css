@@ -97,3 +97,17 @@ li.menu-item:hover {
     gap: 5px;
     align-items: center;
 }
+
+table, th, td {
+    border: 1px solid;
+}
+
+div.centered-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tipernao{
+    margin: 5px;
+}
